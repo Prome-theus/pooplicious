@@ -112,21 +112,19 @@ def collision_sprite():
         return True
 
 
-def data_to_firebase():
+def data_to_firebase(user_text, score):
     # screen.blit(input_surf, input_text)
+    doc_ref = db.collection('leaderboard').document()
+    data ={
+        'user_name':user_text,
+        'score':score,
+        'timestamp':firestore.SERVER_TIMESTAMP
+    }
 
-    if event.type == pygame.KEYDOWN:
+    doc_ref.set(data)
+    print("data added to firestore successfully")
 
-        # Check for backspace
-        if event.key == pygame.K_BACKSPACE:
 
-            # get text input from 0 to -1 i.e. end.
-            user_text = user_text[:-1]
-
-        # Unicode standard is used for string
-        # formation
-        else:
-            user_text += event.unicode
 
 
 pygame.init()
@@ -134,12 +132,14 @@ screen = pygame.display.set_mode((800, 400))
 pygame.display.set_caption("Poopilicious")
 clock = pygame.time.Clock()
 game_active = False
-leaderboard = False
+inputname = False
 start_time = 0
 score = 0
 bg_music = pygame.mixer.Sound("bg_sound.mp3")
 bg_music.set_volume(0.3)
 bg_music.play(loops=-1)
+
+
 
 collide_Sound = pygame.mixer.Sound("collision sound.mp3")
 
@@ -166,13 +166,13 @@ skip_button_rect = skip_button_surf.get_rect(center=(520, 350))
 
 
 user_text = ""
-# input_surf = pygame.image.load("input_box.png").convert_alpha()
+input_surf = pygame.image.load("input_box.png").convert_alpha()
 # input_rect = input_surf.get_rect(center=(400, 80))
-input_rect = pygame.Rect(200, 200, 140, 32)
-color_active = pygame.Color("lightskyblue3")
-color_passive = pygame.Color("chartreuse4")
-color = color_passive
-select = False
+input_rect = pygame.Rect(100, 100, 100, 20)
+# color_active = pygame.Color("lightskyblue3")
+# color_passive = pygame.Color("chartreuse4")
+# color = color_passive
+# select = False
 
 
 # intro screen
@@ -195,7 +195,7 @@ pindex = 0
 p_surf = p_sprite[pindex]
 p_rect = p_surf.get_rect(center=(400, 200))
 screen.fill((94, 129, 162))
-screen.blit(p_surf, p_rect)
+# screen.blit(p_surf, p_rect)
 # pindex += 1
 
 
@@ -220,10 +220,12 @@ while True:
                 obstacle_group.add(Obstacle(choice(["fly", "poop", "poop", "poop"])))
 
         else:
-            # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            #     game_active = True
-            #     start_time = int(pygame.time.get_ticks() / 1000)
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or :
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if p_rect.collidepoint(event.pos):
+                    game_active = True
+                    start_time = int(pygame.time.get_ticks() / 1000)
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
                 if skip_button_rect.collidepoint(event.pos):
                     game_active = True
                     start_time = int(pygame.time.get_ticks() / 1000)
@@ -231,19 +233,22 @@ while True:
                     obstacle_group.empty()
 
                 if add_button_rect.collidepoint(event.pos):
-                    leaderboard = True
+                    inputname = True
                     print("hoi hoi")
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        if input_rect.collidepoint(event.pos):
-                            select = True
-                        else:
-                            select = False
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_BACKSPACE:
-                            user_text = user_text[:-1]
-                        else:
-                            user_text += event.unicode
-                    # data_to_firebase()
+            
+            if inputname and event.type == pygame.KEYDOWN:
+                key = event.key
+
+                if key == pygame.K_BACKSPACE:
+                    user_text = user_text[:-1]
+
+                elif key == pygame.K_RETURN:
+                    print(user_text)  
+                    data_to_firebase(user_text,score)
+
+                else:
+                    user_text += event.unicode
+                
 
     if game_active:
         screen.blit(background_surface, (0, 0))
@@ -258,23 +263,19 @@ while True:
         game_active = collision_sprite()
 
     else:
-        if leaderboard:
+        if inputname:
             screen.blit(background_surface, (0, 0))
             lb_heading = test_font.render(
-                "Enter your name :", False, "black"
+                "LEADERBOARD", False, "black"
             ).convert_alpha()
             lb_rect = lb_heading.get_rect(center=(400, 80))
             screen.blit(lb_heading, lb_rect)
-            if select:
-                color = color_active
-            else:
-                color = color_passive
 
-            pygame.draw.rect(screen, color, input_rect)
+            screen.blit(test_font.render("Enter you Text:",True, (0, 0, 0)), (100, 100))  
             input_surf = test_font.render(user_text, True, (255, 255, 255))
-            screen.blit(input_surf, (input_rect.x + 5, input_rect.y + 5))
-            input_rect.w = max(100, input_surf.get_width() + 10)
-            pygame.display.flip()
+            screen.blit(input_surf, (100, 150))
+            
+
 
         else:
             screen.fill((1, 169, 155))
