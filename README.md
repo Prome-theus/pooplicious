@@ -1,6 +1,6 @@
-## UNDERCROFT
+## POOPLICIOUS
 
-UNDERCROFT is a basic runner game made with Pygame. The goal of the game is to jump and evade enemies as you run through the dungeon.
+POOPlicious is a basic runner game made with Pygame. The goal of the game is to jump and evade enemies as you run through the dungeon.
 
 ### Setup
 
@@ -8,34 +8,25 @@ To set up the game, you will need to install the following Python libraries:
 
 * Pygame
 * Virtualenv
-
-You can install these libraries using pip:
-
-```bash
-pip install pygame virtualenv
-```
+* Firebase-admin
 
 clone the repository to your desired folder
 
 ```bash
-git clone https://github.com/your-username/UNDERCROFT.git
-```
-setup a virtualenv
-
-navigate to the cloned folder
-```bash
-python -m venv .venv
+git clone https://github.com/bogusdeck/POOPlicious.git
 ```
 
-activate venv
+make the install.sh executable(if its not):
+
 ```bash
-./venv/Scripts/Activate.ps1
+chmod +x install.sh
 ```
 
-start the game 
+run the install.sh script
 ```bash
-python main.py
+./install.sh
 ```
+
 
 
 ## Controls
@@ -45,11 +36,18 @@ python main.py
 
 ## Gameplay
 
-The goal of the game is to run as far as possible while avoiding enemies. To jump, press the space bar. To move left and right, use the arrow keys.
+__Game Objective:__
+The objective of the game is to navigate through the dungeon, evading enemies while running as far as possible. Players can jump using the space bar and move left or right using the arrow keys.
 
-Enemies will spawn randomly throughout the dungeon. If you collide with an enemy, you will lose the game.
+__Gameplay:__
+Enemies will appear randomly throughout the dungeon, posing obstacles to the player's progress. Colliding with an enemy results in the player losing the game. The game concludes either upon colliding with an enemy or upon reaching the end of the dungeon.
 
-The game ends when you collide with an enemy or when you reach the end of the dungeon.
+__Score Submission:__
+Upon completing the game, players have the opportunity to submit their score, which is then stored in an online Firebase database using the firebase-admin library.
+
+__Leaderboard Feature:__
+Furthermore, the game features a leaderboard showcasing the top 5 scorers. This leaderboard is displayed at the end of the game when the player submits their score. It provides a competitive element, encouraging players to strive for higher scores and secure a place among the top performers.
+
 
 ## Tips
 
