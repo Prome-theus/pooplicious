@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://github.com/bogusdeck/POOPlicious/assets/80052733/6d606f9b-c32d-4903-855a-15311cf7df8b" height=200 width=200 />
+</p>
+
+
 ## POOPLICIOUS
 
 POOPlicious is a basic runner game made with Pygame. The goal of the game is to jump and evade enemies as you run through the dungeon.
