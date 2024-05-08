@@ -13,11 +13,11 @@ db = firestore.client()
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        player_surface1 = pygame.image.load("player ani/playerA.png").convert_alpha()
-        player_surface2 = pygame.image.load("player ani/playerB.png").convert_alpha()
+        player_surface1 = pygame.image.load("player_ani/playerA.png").convert_alpha()
+        player_surface2 = pygame.image.load("player_ani/playerB.png").convert_alpha()
         self.player_walk = [player_surface1, player_surface2]
         self.player_index = 0
-        self.player_jump = pygame.image.load("player ani/playerC.png").convert_alpha()
+        self.player_jump = pygame.image.load("player_ani/playerC.png").convert_alpha()
         self.image = self.player_walk[self.player_index]
         self.rect = self.image.get_rect(midbottom=(50, 325))
         self.gravity = 0
@@ -188,7 +188,7 @@ playagain_rect = skip_button_surf.get_rect(center=(400,350))
 
 
 user_text = ""
-input_surf = pygame.image.load("input_box.png").convert_alpha()
+# input_surf = pygame.image.load("input_box.png").convert_alpha()
 # input_rect = input_surf.get_rect(center=(400, 80))
 input_rect = pygame.Rect(100, 100, 100, 20)
 # color_active = pygame.Color("lightskyblue3")
