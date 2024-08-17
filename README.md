@@ -3,6 +3,14 @@
 </p>
 
 
+If you like my work, consider buying me a coffee! ☕️
+<div align="center">
+<a href="https://www.buymeacoffee.com/bogusdeck" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" width="150" />
+</a>
+</div>
+
+
 ## POOPLICIOUS
 
 POOPlicious is a basic runner game made with Pygame. The goal of the game is to jump and evade enemies as you run through the dungeon.
